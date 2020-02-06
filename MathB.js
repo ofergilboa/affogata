@@ -15,11 +15,12 @@ class MathB {
       return (num <= x ? true : false)
    }
 
-   //testing isByPercent
-   // let yes = 0
-   // for (let i = 0; i < 1000000; i++) {
-   //    isByPercent(30) ? yes++ : null
-   // }
-   // console.log(yes)
 }
+// testing isByPercent
+// let MathC= new MathB()
+// let yes = 0
+// for (let i = 0; i < 1000000; i++) {
+//    MathC.isByPercent(100) ? yes++ : null
+// }
+// console.log(yes)
 
