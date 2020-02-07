@@ -23,4 +23,3 @@ class MathB {
 //    MathC.isByPercent(100) ? yes++ : null
 // }
 // console.log(yes)
-

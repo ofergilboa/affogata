@@ -1,0 +1,26 @@
+{
+  "name": "affogata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ofergilboa/affogata.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ofergilboa/affogata/issues"
+  },
+  "homepage": "https://github.com/ofergilboa/affogata#readme",
+  "devDependencies": {
+    "jest": "^25.1.0"
+  },
+  "dependencies": {
+    "module": "^1.2.5",
+    "require": "^2.4.20"
+  }
+}
