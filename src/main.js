@@ -1,11 +1,10 @@
 const mathB = new MathB()
-// const tests = new testing()
+const tests = new testing()
 const getRandomRGB = mathB.getRandomRGB
 const getRandomI = mathB.getRandomI
 const isByPercent = mathB.isByPercent
 
 let g = [[], [], []]
-
 class Pixels {
    constructor() {
       this.pop = [g, g, g, g, g, g, g, g]
@@ -102,7 +101,7 @@ class Pixels {
       b.kids.push(p.gene)
    }
 
-   newPop = (numOfGen = 10, pixPerGen = 60, track = -1) => {
+   newPop = async (numOfGen = 10, pixPerGen = 60, track = -1) => {
       this.firstGens(pixPerGen)
       for (let i = 2; i < 6; i++) {
          for (let j = 0; this.pop[i][0].length > 1; j) {
@@ -126,36 +125,21 @@ class Pixels {
       // console.log(this.pop)
       numOfGen--
       track++
-      if (numOfGen > 10) {
-         // return (setTimeout(() => this.newPop(numOfGen, pixPerGen, track), 100))
-         return this.pop
+      if (numOfGen > 0) {
+         this.pop = (() => this.newPop(numOfGen, pixPerGen, track))
+         // return  (setTimeout(() => this.newPop(numOfGen, pixPerGen, track), 1000))
+      } else {
+         return (this.pop)
       }
    }
 }
+
 let PixelsPop = new Pixels
-let genA = PixelsPop.newPop(12, 60)
-console.log(genA)
+let allTests = async function (numOfGen, pixPerGen) {
+   let testPop = await PixelsPop.newPop(numOfGen, pixPerGen)
+   console.log(testPop)
+}
 
-
-let genB = PixelsPop.newPop(30, 60)
-let genC = PixelsPop.newPop(100, 60)
-
-// console.log(gent)
-
-// tests.goneAfter8Gen()
-// tests.createOnly3to6()
-// tests.matchMaxOnceAGen()
-// tests.childGeneInRange()
-// tests.someGeneA()
-// tests.attractOpposite()
-// tests.settleOverGens()
-// tests.onlyOnePartner()
-// tests.noSiblingPartner()
-
-
-
-//  add = function(a, b){
-//    return a + b
-// }
-
-// module.exports = add
+allTests(10, 50)
+// let genB = PixelsPop.newPop(30, 60)
+// let genC = PixelsPop.newPop(100, 60)
