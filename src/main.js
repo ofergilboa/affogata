@@ -19,7 +19,7 @@ class Pixels {
          partnerGenAtMatch: `did not matched yet`,
          numKids: 0,
          kids: [],
-         createdKidsAtGens: {3:0, 4:0, 5:0, 6:0},
+         createdKidsAtGens: { 3: 0, 4: 0, 5: 0, 6: 0 },
          parentsGenAtBirth: `has no parents`
       }
       if (isByPercent(percentOfA)) {
@@ -36,20 +36,20 @@ class Pixels {
 
    // creating generations of random pixels till there are enough generations old enough to couple 
    firstGens = function (pixPerGen) {
-      this.pop.unshift([[], [], []])
-      this.pop.splice(8, 1)
-      if (!this.pop[5][0][0]) {
+      if (!this.pop[4][0][0] && !this.pop[4][1][0]&& !this.pop[5][1][0]) {
+         this.pop.unshift([[], [], []])
          this.generateXPixels(pixPerGen)
          // this.generateXPixels(pixPerGen - 15 + getRandomI(30))
          return this.firstGens(pixPerGen)
       }
+      this.pop.unshift([[], [], []])
    }
 
    // checks attraction chances and return true/false based on those chances
    isMatch = function (a, b) {
       a.tried++
       b.tried++
-      if (a.tried == 4 && b.tried == 4) { return true }
+      if (a.curGen == 6 && b.curGen == 6) { return true }
       let comp = 0
       comp += a.gene.R > b.gene.R ? a.gene.R - b.gene.R : b.gene.R - a.gene.R
       comp += a.gene.G > b.gene.G ? a.gene.G - b.gene.G : b.gene.G - a.gene.G
@@ -58,11 +58,11 @@ class Pixels {
          comp = Math.floor(comp *= 1.2)
       }
       comp = Math.floor(comp / 765 * 100)
-      comp = Math.floor((comp + 15) * ((a.tried + b.tried) / 2) * 0.7)
-      let match = (isByPercent(comp) ? true : false)
+      let comp2 = Math.floor((comp +10) * (((a.curGen + b.curGen) / 2)) * 0.5)
+      let match = (isByPercent(comp2) ? true : false)
       if (match) {
-         a.attraction = Math.floor(comp)
-         b.attraction = Math.floor(comp)
+         a.attraction = comp
+         b.attraction = comp
          a.matchedAtGen = a.curGen
          b.matchedAtGen = b.curGen
          a.partnerGenAtMatch = b.curGen
@@ -100,7 +100,8 @@ class Pixels {
          tried: 0,
          numKids: 0,
          kids: [],
-         parentsGenAtBirth: (a.curGen + b.curGen) / 2
+         parentsGenAtBirth: (a.curGen + b.curGen) / 2,
+         createdKidsAtGens: { 3: 0, 4: 0, 5: 0, 6: 0 },
       }
       let per
       a.gene.A || b.gene.A ? per = 60 : per = 30
@@ -112,19 +113,22 @@ class Pixels {
    }
 
    newPop = async (numOfGen = 10, pixPerGen = 60, test = false, track = -2) => {
-      this.firstGens(pixPerGen)
+      if (!this.pop[5][0][0] && !this.pop[5][1][0]) {
+         this.firstGens(pixPerGen)
+      }else{
+         this.pop.unshift([[], [], []])
+      }
       for (let i = 0; i < 8; i++) {
          for (let j = 0; j < 2; j++) {
             for (let k = 0; k < this.pop[i][j].length; k++) {
-               this.pop[i][j][k].curGen++
+               this.pop[i][j][k].curGen = i+1
             }
          }
       }
-      for (let i = 3; i < 7; i++) {
+      for (let i = 2; i < 6; i++) {
          for (let j = 0; this.pop[i][0].length > 1; null) {
-            let k = getRandomI(this.pop[i][0].length)
-            // this.pop[i][0][k].tried++
-            // this.pop[i][0][0].tried++
+            let k = getRandomI(this.pop[i][0].length-1)+1
+            // console.log(j, k, this.pop[i][0].length)
             if (this.isMatch(this.pop[i][0][0], this.pop[i][0][k])) {
                this.pop[i][1].push(...this.pop[i][0].splice(k, 1))
                this.pop[i][1].push(...this.pop[i][0].splice(0, 1))
@@ -133,12 +137,15 @@ class Pixels {
                this.pop[i][2].push(...this.pop[i][0].splice(0, 1))
             }
          }
-         this.pop[i][0][0] ? console.log(this.pop[i][0].length, i, this.pop[i][0][0].curGen, this.pop[i][0]) : null
+         // this.pop[i][0][0] ? console.log(this.pop[i][0].length, i, this.pop[i][0][0].curGen, this.pop[i][0]) : null
          this.pop[i][0].push(...this.pop[i][2].splice(0))
          for (let j = 0; j < this.pop[i][1].length; j += 2) {
             this.isMultiply(this.pop[i][1][j], (this.pop[i][1][j + 1]))
          }
       }
+      // this.pop.unshift([[], [], []])
+      this.pop.splice(8)
+
       numOfGen--
       track++
       if (numOfGen > 0) {
@@ -167,7 +174,7 @@ let allTests = async function (numOfGen, pixPerGen) {
    tests.createOnly3to6(testPop)
    tests.matchOnly3to6(testPop)
    tests.matchMaxOnceAGen(testPop)
-   // tests.childGeneInRange(testPop)
+   tests.childGeneInRange(testPop)
    // tests.someGeneA(testPop)
    // tests.attractOpposite(testPop)
    // tests.settleOverGens(testPop)
