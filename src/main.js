@@ -126,8 +126,8 @@ class Pixels {
       numOfGen--
       track++
       if (numOfGen > 0) {
-         this.pop = (() => this.newPop(numOfGen, pixPerGen, track))
-         // return  (setTimeout(() => this.newPop(numOfGen, pixPerGen, track), 1000))
+         return (this.newPop(numOfGen, pixPerGen, track))
+         // return  await (setTimeout(() => this.newPop(numOfGen, pixPerGen, track), 1000))
       } else {
          return (this.pop)
       }
@@ -138,8 +138,15 @@ let PixelsPop = new Pixels
 let allTests = async function (numOfGen, pixPerGen) {
    let testPop = await PixelsPop.newPop(numOfGen, pixPerGen)
    console.log(testPop)
+   tests.goneAfter8Gen(testPop)
+   tests.createOnly3to6(testPop)
+   tests.matchMaxOnceAGen(testPop)
+   tests.childGeneInRange(testPop)
+   tests.someGeneA(testPop)
+   tests.attractOpposite(testPop)
+   tests.settleOverGens(testPop)
+   tests.onlyOnePartner(testPop)
+   tests.noSiblingPartner(testPop)
 }
 
 allTests(10, 50)
-// let genB = PixelsPop.newPop(30, 60)
-// let genC = PixelsPop.newPop(100, 60)

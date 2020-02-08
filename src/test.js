@@ -1,10 +1,10 @@
 
 class testing {
 
-   goneAfter8Gen =  () => {
+   goneAfter8Gen =  (pop) => {
       console.log(`-----------goneAfter8Gen------------`)
-      for (let i = 0; i <= this.pop.length; i++) {
-         if (this.pop[i]) {
+      for (let i = 0; i <= pop.length; i++) {
+         if (pop[i]) {
             console.log(`generation ${i + 1} exist`)
          } else {
             console.log(`generation ${i + 1} does not exist`)
@@ -12,13 +12,13 @@ class testing {
       }
    }
 
-   createOnly3to6 = function () {
+   createOnly3to6 = function (pop) {
       console.log(`-----------createOnly3to6------------`)
       console.log(`only gen 3-6 go through the process`)
 
    }
 
-   matchMaxOnceAGen = function () {
+   matchMaxOnceAGen = function (pop) {
       console.log(`-----------matchMaxOnceAGen------------`)
       let correct = 0
       let incorrect = 0
@@ -40,32 +40,32 @@ class testing {
 
    }
 
-   childGeneInRange = function () {
+   childGeneInRange = function (pop) {
       console.log(`-----------childGeneInRange------------`)
 
    }
 
-   someGeneA = function () {
+   someGeneA = function (pop) {
       console.log(`-----------someGeneA------------`)
 
    }
 
-   attractOpposite = function () {
+   attractOpposite = function (pop) {
       console.log(`-----------attractOpposite------------`)
 
    }
 
-   settleOverGens = function () {
+   settleOverGens = function (pop) {
       console.log(`-----------settleOverGens------------`)
 
    }
 
-   onlyOnePartner = function () {
+   onlyOnePartner = function (pop) {
       console.log(`-----------onlyOnePartner------------`)
 
    }
 
-   noSiblingPartner = function () {
+   noSiblingPartner = function (pop) {
       console.log(`-----------noSiblingPartner------------`)
 
    }
