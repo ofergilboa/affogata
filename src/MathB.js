@@ -15,7 +15,12 @@ class MathB {
       return (num <= x ? true : false)
    }
 
+   isBetween = function (x, y, z) {
+      return (x <= y && x >= z || x >= y && x <= z) ? true : false
+   }
 }
+
+
 // testing isByPercent
 // let MathC= new MathB()
 // let yes = 0
