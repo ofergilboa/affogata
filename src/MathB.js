@@ -11,7 +11,6 @@ class MathB {
 
    isByPercent = function (x) {
       let num = Math.floor((Math.random() * (100) + 1))
-      // console.log(num)
       return (num <= x ? true : false)
    }
 
@@ -21,10 +20,4 @@ class MathB {
 }
 
 
-// testing isByPercent
-// let MathC= new MathB()
-// let yes = 0
-// for (let i = 0; i < 1000000; i++) {
-//    MathC.isByPercent(100) ? yes++ : null
-// }
-// console.log(yes)
+
