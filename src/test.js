@@ -46,12 +46,9 @@ class testing {
       }
    }
 
-
    matchMaxOnceAGen = function (pop) {
       console.log(`-----------matchMaxOnceAGen------------`)
       let gen = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
-      let correct = 0
-      let incorrect = 0
       for (let i = 0; i < 8; i++) {
          for (let j = 0; j < 2; j++) {
             pop[i][j].forEach(p => p.tried > gen[i + 1] ? gen[i + 1] = p.tried : null)
@@ -135,11 +132,6 @@ class testing {
       }
    }
 
-   onlyOnePartner = function (pop) {
-      console.log(`-----------onlyOnePartner------------`)
-
-   }
-
    onlyMatchSameGen = function (pop) {
       console.log(`-----------onlyMatchSameGen------------`)
       let sameGen = 0
@@ -172,35 +164,14 @@ class testing {
    1) Pixels only match within their generation
    2) Pixels reproduce maximum once a generation
 hence:
-   A pixel cannot match outside his generation and has no siblings in his generation
+   A pixels don't match outside their generation and has no siblings in their generation
 Therefor:
    pixels don’t mate with any of their direct siblings`)
    }
+
+   onlyOnePartner = function () {
+      console.log(`-----------onlyOnePartner------------`)
+      console.log(`if a pixel who's "matchedAtGen" attribute is a number, which means he is not single,
+ the pixels population will alert him/her/it not to do that, then lose all faith in existence and crash`)
+   }
 }
-
-
-// tests.goneAfter8Gen()
-// tests.createOnly3to6()
-// tests.matchMaxOnceAGen()
-// tests.childGeneInRange()
-// tests.someGeneA()
-// tests.attractOpposite()
-// tests.settleOverGens()
-// tests.onlyOnePartner()
-// tests.noSiblingPartner()
-
-
-
-// const add = require('./main')
-
-// test("add should return sum of a + b", () => {
-//     let sum = add(1, 2)
-//     expect(sum).toBe(3)
-// })
-
-//  add = function(a, b){
-// return a + b
-// }
-// 
-// module.exports = add
-
