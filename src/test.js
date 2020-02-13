@@ -3,42 +3,40 @@ const isBetween = mathT.isBetween
 
 class testing {
 
-   goneAfter8Gen = (pop) => {
-      let pixPerGen = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 }
+   goneAfter8Gen = (population) => {
+      let pixelsPerGeneration = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 }
       for (let i = 0; i < 9; i++) {
-         for (let j = 0; j < 2; j++) {
-            pop[i] ? pixPerGen[i + 1] += pop[i][j].length : null
-         }
+         population[i] ? pixelsPerGeneration[i + 1] += population[i].length : null
       }
       let all = 0
       for (let i = 0; i < 10; i++) {
-         all += pixPerGen[i]
+         all += pixelsPerGeneration[i]
       }
       console.log(`There are ${all} pixels`)
       for (let i = 0; i < 10; i++) {
-         console.log(`${i}) There are ${pixPerGen[i]} pixels in generation ${i}`)
+         console.log(`${i}) There are ${pixelsPerGeneration[i]} pixels in generation ${i}`)
       }
    }
 
-   createOnly3to6 = function (pop) {
+   createOnly3to6 = function (population) {
       console.log(`-----------createOnly3to6------------`)
-      let parents = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
+      let kids = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 0; i < 8; i++) {
-         for (let j = 0; j < 2; j++) {
-            pop[i][j].forEach(p => parents[p.parentsGenAtBirth]++)
+         for (let j = 0; i < 4; i++) {
+            // population[i].forEach(p => p.kids[j] ? kids[p.currentGeneration-]++ : null)
          }
       }
       for (let i = 0; i < 9; i++) {
-         console.log(`${i}) There are ${parents[i]} kids, who's parents were generation ${i} when they were born`)
+         console.log(`${i}) There are ${kids[i]} kids, who's parents were generation ${i} when they were born`)
       }
    }
 
-   matchOnly3to6 = function (pop) {
+   matchOnly3to6 = function (population) {
       console.log(`-----------matchOnly3to6------------`)
       let matched = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 0; i < 8; i++) {
          for (let j = 0; j < 2; j++) {
-            pop[i][j].forEach(p => matched[p.matchedAtGen]++)
+            population[i].forEach(p => matched[p.matchedAtGen]++)
          }
       }
       for (let i = 0; i < 9; i++) {
@@ -46,29 +44,29 @@ class testing {
       }
    }
 
-   matchMaxOnceAGen = function (pop) {
+   matchMaxOnceAGen = function (population) {
       console.log(`-----------matchMaxOnceAGen------------`)
-      let gen = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
+      let generation = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 0; i < 8; i++) {
-         for (let j = 0; j < 2; j++) {
-            pop[i][j].forEach(p => p.tried > gen[i + 1] ? gen[i + 1] = p.tried : null)
+         for (let j = 3; j < 7; j++) {
+            population[i].forEach(p => p.matchTries[j] > 1 ? generation[i]++ : null)
          }
       }
       for (let i = 0; i < 9; i++) {
-         console.log(`${i}) The max match tries for a pixel at generation ${i} is: ${gen[i]}`)
+         console.log(`${i}) There are ${generation[i]} who tried matching more than once during generation ${i}`)
       }
    }
 
-   childGeneInRange = function (pop) {
+   childGeneInRange = function (population) {
       console.log(`-----------childGeneInRange------------`)
       let between = 0
       let notBetween = 0
       for (let i = 0; i < 8; i++) {
-         for (let j = 0; j < pop[i][1].length; j += 2) {
-            for (let k = 0; k < pop[i][1][j].kids.length; k++) {
-               isBetween(pop[i][1][j].kids[k].R, pop[i][1][j].gene.R, pop[i][1][j + 1].gene.R) ? between++ : notBetween++
-               isBetween(pop[i][1][j].kids[k].G, pop[i][1][j].gene.G, pop[i][1][j + 1].gene.G) ? between++ : notBetween++
-               isBetween(pop[i][1][j].kids[k].B, pop[i][1][j].gene.B, pop[i][1][j + 1].gene.B) ? between++ : notBetween++
+         for (let j = 0; j < population[i][1].length; j += 2) {
+            for (let k = 0; k < population[i][1][j].kids.length; k++) {
+               isBetween(population[i][1][j].kids[k].R, population[i][1][j].gene.R, population[i][1][j + 1].gene.R) ? between++ : notBetween++
+               isBetween(population[i][1][j].kids[k].G, population[i][1][j].gene.G, population[i][1][j + 1].gene.G) ? between++ : notBetween++
+               isBetween(population[i][1][j].kids[k].B, population[i][1][j].gene.B, population[i][1][j + 1].gene.B) ? between++ : notBetween++
             }
          }
       }
@@ -76,39 +74,39 @@ class testing {
       *checks only pixels who's parents are alive `)
    }
 
-   someGeneA = function (pop) {
+   someGeneA = function (population) {
       console.log(`-----------someGeneA------------`)
       let geneA = 0
       let noGeneA = 0
       for (let i = 0; i < 8; i++) {
          for (let j = 0; j < 2; j++) {
-            pop[i][j].forEach(p => p.gene.A ? geneA++ : noGeneA++)
+            population[i][j].forEach(p => p.gene.A ? geneA++ : noGeneA++)
          }
       }
       console.log(`There are ${geneA} pixels with gene A and ${noGeneA} without`)
    }
 
-   attractOpposite = function (pop) {
+   attractOpposite = function (population) {
       console.log(`-----------attractOpposite------------`)
       let count = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
       let dist = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
       for (let i = 2; i < 8; i++) {
-         for (let k = 0; k < pop[i][1].length; k++) {
-            if (isBetween(pop[i][1][k].attraction, 0, 20)) {
+         for (let k = 0; k < population[i][1].length; k++) {
+            if (isBetween(population[i][1][k].attraction, 0, 20)) {
                count[1]++
-               dist[1] += pop[i][1][k].geneDist
-            } else if (isBetween(pop[i][1][k].attraction, 21, 40)) {
+               dist[1] += population[i][1][k].geneDist
+            } else if (isBetween(population[i][1][k].attraction, 21, 40)) {
                count[2]++
-               dist[2] += pop[i][1][k].geneDist
-            } else if (isBetween(pop[i][1][k].attraction, 41, 60)) {
+               dist[2] += population[i][1][k].geneDist
+            } else if (isBetween(population[i][1][k].attraction, 41, 60)) {
                count[3]++
-               dist[3] += pop[i][1][k].geneDist
-            } else if (isBetween(pop[i][1][k].attraction, 61, 80)) {
+               dist[3] += population[i][1][k].geneDist
+            } else if (isBetween(population[i][1][k].attraction, 61, 80)) {
                count[4]++
-               dist[4] += pop[i][1][k].geneDist
-            } else if (isBetween(pop[i][1][k].attraction, 81, 100)) {
+               dist[4] += population[i][1][k].geneDist
+            } else if (isBetween(population[i][1][k].attraction, 81, 100)) {
                count[5]++
-               dist[5] += pop[i][1][k].geneDist
+               dist[5] += population[i][1][k].geneDist
             }
          }
       }
@@ -117,14 +115,14 @@ class testing {
       }
    }
 
-   settleOverGens = function (pop) {
+   settleOverGens = function (population) {
       console.log(`-----------settleOverGens------------`)
       let count = { 3: 0, 4: 0, 5: 0, 6: 0 }
       let attMatchedAt = { 3: 0, 4: 0, 5: 0, 6: 0 }
       for (let i = 2; i < 8; i++) {
-         for (let k = 0; k < pop[i][1].length; k++) {
-            attMatchedAt[pop[i][1][k].matchedAtGen] += pop[i][1][k].attraction
-            count[pop[i][1][k].matchedAtGen]++
+         for (let k = 0; k < population[i][1].length; k++) {
+            attMatchedAt[population[i][1][k].matchedAtGen] += population[i][1][k].attraction
+            count[population[i][1][k].matchedAtGen]++
          }
       }
       for (let i = 3; i < 7; i++) {
@@ -132,33 +130,33 @@ class testing {
       }
    }
 
-   onlyMatchSameGen = function (pop) {
+   onlyMatchSameGen = function (population) {
       console.log(`-----------onlyMatchSameGen------------`)
       let sameGen = 0
       let difGen = 0
       for (let i = 0; i < 8; i++) {
-         for (let j = 0; j < pop[i][1].length; j += 2) {
-            pop[i][1][j].matchedAtGen == pop[i][1][j + 1].matchedAtGen ? sameGen++ : difGen++
+         for (let j = 0; j < population[i][1].length; j += 2) {
+            population[i][1][j].matchedAtGen == population[i][1][j + 1].matchedAtGen ? sameGen++ : difGen++
          }
       }
       console.log(`There are ${sameGen} couples from the same generation and ${difGen} couples from different generations`)
    }
 
-   aChildMaxPerGen = function (pop) {
+   aChildMaxPerGen = function (population) {
       console.log(`-----------maxChildPerGen------------`)
       let oneMax = 0
       let moreThanOne = 0
       for (let i = 0; i < 8; i++) {
-         for (let j = 0; j < pop[i][1].length; j += 2) {
+         for (let j = 0; j < population[i][1].length; j += 2) {
             for (let k = 3; k < 7; k++) {
-               pop[i][1][j].createdKidsAtGens[k] > 1 ? moreThanOne++ : oneMax++
+               population[i][1][j].createdKidsAtGens[k] > 1 ? moreThanOne++ : oneMax++
             }
          }
       }
       console.log(`There are ${moreThanOne} pixels who created more then one kid at the same generation and ${oneMax / 4} who didn't`)
    }
 
-   noSiblingPartner = function (pop) {
+   noSiblingPartner = function (population) {
       console.log(`-----------noSiblingPartner------------`)
       console.log(`We have shown: 
    1) Pixels only match within their generation
