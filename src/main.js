@@ -18,11 +18,11 @@ class Pixel {
       // this.createdKidsAtGens = { 3: 0, 4: 0, 5: 0, 6: 0, }
    }
 
-   createPixel = function (id, a, b, percentOfA = 50) {
+   createPixel = function (id, a, b) {
       let p = new Pixel(id)
-      this.pixelID++
-      PixelsPopulation.pixelID++
-      if (a) { // if new pixel has parents
+      // this.pixelID++
+      pixels.pixelID++
+      if (a) { // if new pixel has parents:
          p.genes = { // set kid's genes between parents Genes
             R: a.genes.R > b.genes.R ?
                a.genes.R - getRandomI(a.genes.R - b.genes.R) :
@@ -41,18 +41,15 @@ class Pixel {
          a.kids.push(id)
          b.kids.push(id)
       }
-      else { // if new pixel has no parents- part of first 5 generations
+      else { // if new pixel has no parents- part of first 5 generations:
          p.genes = { R: getRandomRGB(), G: getRandomRGB(), B: getRandomRGB() }
-         isByPercent(percentOfA) ? p.genes.A = (getRandomI(100) / 100) : null
+         isByPercent(50) ? p.genes.A = (getRandomI(100) / 100) : null
       }
-      // console.log(p.id)
       return p
    }
 
-
    isMatch = function (a, b) { // checks attraction chances and return true/false based on those chances
-      if (a.partner || b.partner) { console.log(`alert--------`, a.currentGeneration, a.id, b.partner, b.id, a.partner) }
-
+      if (a.partner || b.partner) { alert(`DON'T DO THAT ${b.id}!!!!`) } // matched pixels can't match again
       a.matchTries[a.currentGeneration]++
       b.matchTries[b.currentGeneration]++
       let genesDistance = 0 // combining distances between genes
@@ -64,11 +61,10 @@ class Pixel {
          compatibility = Math.floor(compatibility *= 1.2) :
          compatibility = Math.floor(compatibility *= 0.8)
       compatibility = Math.floor((compatibility / 762) * 100) //turn to percent (of maximum distance: 254*3)
-      let triedCompatibility = Math.floor((compatibility) * (a.currentGeneration) * 2) // set compatibility based on tries
-      let match = (isByPercent(triedCompatibility) ? true : false)
+      let generationalCompatibility = Math.floor((compatibility) * (a.currentGeneration) * 2) // set compatibility based on generation
+      let match = (isByPercent(generationalCompatibility) ? true : false)
       if (match || a.currentGeneration === 6) {
-         a.compatibility = compatibility // set pixel's compatibility to compatibility with actual match
-         b.compatibility = compatibility
+         a.compatibility = b.compatibility = compatibility // set pixel's compatibility to compatibility with actual match
          a.partner = b.id
          b.partner = a.id
          return true
@@ -76,11 +72,11 @@ class Pixel {
       return false
    }
 
-   multiply = function (a, b) {
+   multiply = function (a, b) { // call pixels.generateXPixels based on compatibility
       let multiply = isByPercent(a.compatibility + 35)
       a.createTries[a.currentGeneration]++
       b.createTries[b.currentGeneration]++
-      return multiply
+      multiply ? pixels.generateXPixels(1, a, b) : null
    }
 }
 let pixel = new Pixel()
@@ -91,7 +87,7 @@ class Pixels {
       this.pixelID = 1
    }
 
-   generateXPixels = function (pixels, a, b) { // create a child pixel or x random pixels
+   generateXPixels = function (pixels, a, b) { // create a child pixel or X random pixels
       for (let i = 0; i < pixels; i++) {
          let p = pixel.createPixel(this.pixelID, a, b)
          this.population[0].push(p)
@@ -102,7 +98,7 @@ class Pixels {
       if (!this.population[4][0]) {
          this.population.unshift([])
          this.generateXPixels(x)
-         // this.generateXPixels(x - 15 + getRandomI(30))
+         // this.generateXPixels(x - 15 + getRandomI(30)) 
          return this.createFirstGenerations(x)
       }
       this.population.unshift([])
@@ -123,18 +119,16 @@ class Pixels {
       for (let i = 2; i < 6; i++) { // match and multiply generations 3-6
          let singles = this.population[i].filter(p => !p.partner) // array referencing to singles
          for (let j = 0; j < Math.floor(singles.length); j += 2) {
-            let k = getRandomI(singles.length - j - 2) + 1 
-            pixel.isMatch(singles[0], singles[k]) 
-            singles.push(...singles.splice(k, 1))
+            let k = getRandomI(singles.length - j - 2) + 1 // set new index (within correct range) to match with i 0
+            pixel.isMatch(singles[0], singles[k])
+            singles.push(...singles.splice(k, 1)) // pushes pixels who tried matching to end of array
             singles.push(...singles.splice(0, 1))
          }
          !this.population[i][0].partner ? this.population[i][0].matchTries[i + 1] = 1 : null // if array is odd, first pixel in array didn't try matching, set correct if single  
          let couples = this.population[i].filter(p => p.partner) // array referencing to coupled
          for (let j = 0; j < couples.length; j++) {
             if (!couples[j].createTries[i + 1]) { // if matched & didn't try creating this generation- multiply
-               if (pixel.multiply(couples[j], couples.find(p => p.id === couples[j].partner))) {
-                  this.generateXPixels(1, couples[j], couples.find(p => p.id === couples[j].partner))
-               }
+               pixel.multiply(couples[j], couples.find(p => p.id === couples[j].partner))
             }
          }
       }
@@ -149,12 +143,12 @@ class Pixels {
    }
 }
 
-let PixelsPopulation = new Pixels
-// PixelsPopulation.createPopulation(20, 50)
+let pixels = new Pixels
+// pixels.createPopulation(20, 50)
 
 let allTests = async function (numberOfGenerations, pixelsPerGeneration) {
-   let testPopulation = await PixelsPopulation.createPopulation(numberOfGenerations, pixelsPerGeneration)
-   console.log(`test`, testPopulation)
+   let testPopulation = await pixels.createPopulation(numberOfGenerations, pixelsPerGeneration)
+   console.log(`test:`, numberOfGenerations, `generations passed,`, pixelsPerGeneration, `pixels per starter generations`, testPopulation)
    tests.goneAfter8Gen(testPopulation)
    // tests.createOnly3to6(testPopulation)
    // tests.matchOnly3to6(testPopulation)
@@ -169,7 +163,7 @@ let allTests = async function (numberOfGenerations, pixelsPerGeneration) {
    tests.onlyOnePartner(testPopulation)
 }
 
-// allTests(10, 50)
+// allTests(10, 50) // test after 10 generations, generate first generations with 50 pixels
 allTests(20, 50)
 // allTests(30, 50)
 // allTests(50, 50)
