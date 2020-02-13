@@ -15,7 +15,6 @@ class Pixel {
       this.kids = []
       this.matchTries = { 3: 0, 4: 0, 5: 0, 6: 0, }
       this.createTries = { 3: 0, 4: 0, 5: 0, 6: 0, }
-      // this.createdKidsAtGens = { 3: 0, 4: 0, 5: 0, 6: 0, }
    }
 
    createPixel = function (id, a, b) {
@@ -38,8 +37,8 @@ class Pixel {
          a.genes.A || b.genes.A ? per = 60 : per = 30
          let geneA = isByPercent(per)
          geneA ? p.genes.A = (getRandomI(100) / 100) : null
-         a.kids.push(id)
-         b.kids.push(id)
+         a.kids.push(id, { R: p.R, G: p.G, B: p.B })
+         b.kids.push(id, { R: p.R, G: p.G, B: p.B })
       }
       else { // if new pixel has no parents- part of first 5 generations:
          p.genes = { R: getRandomRGB(), G: getRandomRGB(), B: getRandomRGB() }
