@@ -121,7 +121,7 @@ class Pixels {
       }
    }
 
-   createPopulation = async (numberOfGenerations = 10, pixelsPerGeneration = 60, test = false, track = -2) => {
+   createPopulation = async (numberOfGenerations = 10, pixelsPerGeneration = 60, track = -2) => {
       this.createFirstGenerations(pixelsPerGeneration)
       this.setCurrentGeneration()
 
@@ -142,49 +142,40 @@ class Pixels {
                }
             }
          }
-
-         // console.log(this.population[i])
       }
       this.population.splice(8)
       numberOfGenerations--
       track++
       if (numberOfGenerations > 0) {
-         if (test) {
-            return (this.createPopulation(numberOfGenerations, pixelsPerGeneration, true, track))
-         } else {
-            // console.log(track,this.population[track])
-            return (setTimeout(() => this.createPopulation(numberOfGenerations, pixelsPerGeneration, false, track), 10))
-         }
-      } else if (test) {
-         return (this.population)
-      } else {
-         console.log(this.population)
+         // console.log(track,this.population[track]) // track a generation's development 
+         return (this.createPopulation(numberOfGenerations, pixelsPerGeneration, track))
       }
+      return (this.population)
    }
 }
 
 let PixelsPopulation = new Pixels
-// PixelsPopulation.createPopulation(30, 50)
+// PixelsPopulation.createPopulation(20, 50)
 
-let allTests = async function (numOfGen, pixPerGen) {
-   let testPop = await PixelsPop.newPop(numOfGen, pixPerGen, true)
-   console.log(`test`, testPop)
-   tests.goneAfter8Gen(testPop)
-   tests.createOnly3to6(testPop)
-   tests.matchOnly3to6(testPop)
-   tests.matchMaxOnceAGen(testPop)
-   tests.childGeneInRange(testPop)
-   tests.someGeneA(testPop)
-   tests.attractOpposite(testPop)
-   tests.settleOverGens(testPop)
-   tests.onlyMatchSameGen(testPop)
-   tests.aChildMaxPerGen(testPop)
-   tests.noSiblingPartner(testPop)
-   tests.onlyOnePartner(testPop)
+let allTests = async function (numberOfGenerations, pixelsPerGeneration) {
+   let testPopulation = await PixelsPopulation.createPopulation(numberOfGenerations, pixelsPerGeneration)
+   console.log(`test`, testPopulation)
+   tests.goneAfter8Gen(testPopulation)
+   tests.createOnly3to6(testPopulation)
+   tests.matchOnly3to6(testPopulation)
+   tests.matchMaxOnceAGen(testPopulation)
+   tests.childGeneInRange(testPopulation)
+   tests.someGeneA(testPopulation)
+   tests.attractOpposite(testPopulation)
+   tests.settleOverGens(testPopulation)
+   tests.onlyMatchSameGen(testPopulation)
+   tests.aChildMaxPerGen(testPopulation)
+   tests.noSiblingPartner(testPopulation)
+   tests.onlyOnePartner(testPopulation)
 }
 
 // allTests(10, 50)
-// allTests(20, 50)
+allTests(20, 50)
 // allTests(30, 50)
 // allTests(50, 50)
 // allTests(100, 50)
