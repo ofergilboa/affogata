@@ -166,7 +166,7 @@ class Pixels {
 }
 
 let PixelsPop = new Pixels
-PixelsPop.newPop(20, 50)
+// PixelsPop.newPop(20, 50)
 
 let allTests = async function (numOfGen, pixPerGen) {
    let testPop = await PixelsPop.newPop(numOfGen, pixPerGen, true)
@@ -185,8 +185,8 @@ let allTests = async function (numOfGen, pixPerGen) {
    tests.onlyOnePartner(testPop)
 }
 
-// allTests(10, 50)
-// allTests(20, 50)
+// allTests(4, 50)
+allTests(20, 50)
 // allTests(30, 50)
 // allTests(50, 50)
 // allTests(100, 50)
