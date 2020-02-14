@@ -3,7 +3,8 @@ const isBetween = mathT.isBetween
 
 class testing {
 
-   goneAfter8Gen = (population) => {
+   goneAfter8Generations = (population) => {
+      console.log(`---goneAfter8Gen---- Pixels have a life-span of 8 generations`)
       let pixelsPerGeneration = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 }
       for (let i = 0; i < 9; i++) {
          population[i] ? pixelsPerGeneration[i + 1] += population[i].length : null
@@ -19,7 +20,7 @@ class testing {
    }
 
    createOnly3to6 = function (population) {
-      console.log(`-----------createOnly3to6------------`)
+      console.log(`---createOnly3to6---- A pixel can replicate only between its 3rd and 6th generations`)
       let kids = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 0; i < 8; i++) {
          for (let j = 0; i < 4; i++) {
@@ -31,8 +32,22 @@ class testing {
       }
    }
 
+   aChildMaxPerGeneration = function (population) {
+      console.log(`---maxChildPerGen---- A pixel can try creating kids only once a generation`)
+      let oneMax = 0
+      let moreThanOne = 0
+      for (let i = 0; i < 8; i++) {
+         for (let j = 0; j < population[i][1].length; j += 2) {
+            for (let k = 3; k < 7; k++) {
+               population[i][1][j].createdKidsAtGens[k] > 1 ? moreThanOne++ : oneMax++
+            }
+         }
+      }
+      console.log(`There are ${moreThanOne} pixels who created more then one kid at the same generation and ${oneMax / 4} who didn't`)
+   }
+
    matchOnly3to6 = function (population) {
-      console.log(`-----------matchOnly3to6------------`)
+      console.log(`---matchOnly3to6---- A pixel can search for a partner only between its 3rd and 6th generations`)
       let matched = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 0; i < 8; i++) {
          for (let j = 0; j < 2; j++) {
@@ -44,8 +59,8 @@ class testing {
       }
    }
 
-   matchMaxOnceAGen = function (population) {
-      console.log(`-----------matchMaxOnceAGen------------`)
+   matchMaxOnceAGeneration = function (population) {
+      console.log(`---matchMaxOnceAGen---- A pixel can search for a partner only once a generation`)
       let generation = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 0; i < 8; i++) {
          for (let j = 3; j < 7; j++) {
@@ -58,7 +73,7 @@ class testing {
    }
 
    childGeneInRange = function (population) {
-      console.log(`-----------childGeneInRange------------`)
+      console.log(`---childGeneInRange---- Pixel's genes are in range of their parents equivalent genes `)
       let between = 0
       let notBetween = 0
       for (let i = 0; i < 8; i++) {
@@ -75,7 +90,7 @@ class testing {
    }
 
    someGeneA = function (population) {
-      console.log(`-----------someGeneA------------`)
+      console.log(`---someGeneA---- A pixel can be born with either an RGB sequence, or an RGBA sequence`)
       let geneA = 0
       let noGeneA = 0
       for (let i = 0; i < 8; i++) {
@@ -87,7 +102,7 @@ class testing {
    }
 
    attractOpposite = function (population) {
-      console.log(`-----------attractOpposite------------`)
+      console.log(`---attractOpposite---- Pixels are more attracted to their genetic opposites`)
       let count = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
       let dist = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
       for (let i = 2; i < 8; i++) {
@@ -115,8 +130,8 @@ class testing {
       }
    }
 
-   settleOverGens = function (population) {
-      console.log(`-----------settleOverGens------------`)
+   settleOverGeneration = function (population) {
+      console.log(`---settleOverGens---- The higher the generation of a pixel is, the less attraction is needed to match`)
       let count = { 3: 0, 4: 0, 5: 0, 6: 0 }
       let attMatchedAt = { 3: 0, 4: 0, 5: 0, 6: 0 }
       for (let i = 2; i < 8; i++) {
@@ -130,8 +145,8 @@ class testing {
       }
    }
 
-   onlyMatchSameGen = function (population) {
-      console.log(`-----------onlyMatchSameGen------------`)
+   noSiblingPartner = function (population) {
+      console.log(`---noSiblingPartner---- Pixels don’t mate with any of their direct siblings`)
       let sameGen = 0
       let difGen = 0
       for (let i = 0; i < 8; i++) {
@@ -140,36 +155,33 @@ class testing {
          }
       }
       console.log(`There are ${sameGen} couples from the same generation and ${difGen} couples from different generations`)
-   }
 
-   aChildMaxPerGen = function (population) {
-      console.log(`-----------maxChildPerGen------------`)
-      let oneMax = 0
-      let moreThanOne = 0
-      for (let i = 0; i < 8; i++) {
-         for (let j = 0; j < population[i][1].length; j += 2) {
-            for (let k = 3; k < 7; k++) {
-               population[i][1][j].createdKidsAtGens[k] > 1 ? moreThanOne++ : oneMax++
-            }
-         }
-      }
-      console.log(`There are ${moreThanOne} pixels who created more then one kid at the same generation and ${oneMax / 4} who didn't`)
-   }
-
-   noSiblingPartner = function (population) {
-      console.log(`-----------noSiblingPartner------------`)
       console.log(`We have shown: 
    1) Pixels only match within their generation
    2) Pixels reproduce maximum once a generation
 hence:
-   A pixels don't match outside their generation and has no siblings in their generation
+   A pixels don't match outside their generation and has no siblings inside their generation
 Therefor:
    pixels don’t mate with any of their direct siblings`)
    }
 
    onlyOnePartner = function () {
-      console.log(`-----------onlyOnePartner------------`)
+      console.log(`---onlyOnePartner----`)
       console.log(`if a pixel who's "matchedAtGen" attribute is a number, which means he is not single,
  the pixels population will alert him/her/it not to do that, then lose all faith in existence and crash`)
    }
 }
+
+
+
+   // onlyMatchSameGeneration = function (population) {
+   //    console.log(`---onlyMatchSameGen----`)
+   //    let sameGen = 0
+   //    let difGen = 0
+   //    for (let i = 0; i < 8; i++) {
+   //       for (let j = 0; j < population[i][1].length; j += 2) {
+   //          population[i][1][j].matchedAtGen == population[i][1][j + 1].matchedAtGen ? sameGen++ : difGen++
+   //       }
+   //    }
+   //    console.log(`There are ${sameGen} couples from the same generation and ${difGen} couples from different generations`)
+   // }

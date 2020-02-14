@@ -1,16 +1,11 @@
-
 class MathB {
 
-   getRandomRGB = function () {
-      return Math.floor((Math.random() * 255) + 1)
-   }
-
    getRandomI = function (x) {
-      return Math.floor((Math.random() * (x)))
+      return Math.ceil((Math.random() * (x)))
    }
 
    isByPercent = function (x) {
-      let num = Math.floor((Math.random() * (100) + 1))
+      let num = Math.floor(Math.random() * (101))
       return (num <= x ? true : false)
    }
 
