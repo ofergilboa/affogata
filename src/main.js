@@ -72,7 +72,7 @@ class Pixel {
    multiply = function (a, b) { // call pixels.generateXPixels based on attraction
       a.createTries++
       b.createTries++
-      let multiply = isByPercent(a.attraction /2 + 25)
+      let multiply = isByPercent(a.attraction / 2 + 25)
       multiply ? pixels.generateXPixels(1, a, b) : null
    }
 }
@@ -122,8 +122,7 @@ class Pixels {
             singles.push(...singles.splice(k, 1)) // pushes pixels who tried matching to end of array
             singles.push(...singles.splice(0, 1))
          }
-         // !this.population[i][0].partner ? console.log(this.population[i][0].currentGeneration, this.population[i][0].matchTries) : null // if array is odd, first pixel in array "matchTries" is wrong if single- correct  
-         !this.population[i][0].partner ? this.population[i][0].matchTries = this.population[i][0].currentGeneration - 2 : null // if array is odd, first pixel in array "matchTries" is wrong if single- correct  
+         // !this.population[i][0].partner ? this.population[i][0].matchTries = this.population[i][0].currentGeneration - 2 : null // if array is odd, first pixel in array "matchTries" is wrong if single- correct  
          let couples = this.population[i].filter(p => p.partner) // array referencing to coupled
          for (let j = 0; j < couples.length; j++) {
             if (couples[j].currentGeneration - (couples[j].createTries + couples[j].matchTries) == 2) { // if matched & didn't try creating this generation- multiply
@@ -153,12 +152,10 @@ let allTests = async function (numberOfGenerations, pixelsPerGeneration) {
    tests.aChildMaxPerGeneration(testPopulation)
    tests.matchOnly3to6(testPopulation)
    tests.matchMaxOnceAGeneration(testPopulation)
-   // tests.matchCreateOnceAGeneration(testPopulation)
    tests.childGeneInRange(testPopulation)
    tests.someGeneA(testPopulation)
-   // tests.attractOpposite(testPopulation)
+   tests.attractOpposite(testPopulation)
    tests.settleOverGeneration(testPopulation)
-   // tests.onlyMatchSameGeneration(testPopulation)
    tests.noSiblingPartner(testPopulation)
    tests.onlyOnePartner(testPopulation)
 }
