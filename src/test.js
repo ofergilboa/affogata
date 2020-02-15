@@ -121,7 +121,7 @@ class testing {
       let distance = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
       for (let i = 2; i < 8; i++) {
          for (let k = 0; k < population[i].length; k++) {
-            if (isBetween(population[i][k].attraction, 0, 20)) {
+            if (isBetween(population[i][k].attraction,  1, 20)) {
                count[1]++
                distance[1] += population[i][k].partner ? this.getDistance(population[i][k], population[i].find(p => p.id === population[i][k].partner)) : null
             } else if (isBetween(population[i][k].attraction, 21, 40)) {
@@ -140,7 +140,7 @@ class testing {
          }
       }
       for (let i = 1; i < 6; i++) {
-         console.log(`The average distance between genes of pixels with attraction ${i * 20 - 19}${i * 20 < 90 ? `-${i * 20}` : `+`} is: ${distance[i] ? Math.floor(distance[i] / count[i]) : `There are none`}`)
+         console.log(`There are ${count[i]} pixels with attraction ${i * 20 - 19}${i * 20 < 90 ? `-${i * 20}` : `+`}, who's average distance between genes is: ${distance[i] ? Math.floor(distance[i] / count[i]) : `There are none`}`)
       }
    }
 

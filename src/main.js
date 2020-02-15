@@ -57,8 +57,8 @@ class Pixel {
       a.genes.A && b.genes.A || !a.genes.A && !b.genes.A ? // adjusting attraction based on existence of gene A
          attraction = Math.floor(attraction *= 1.2) :
          attraction = Math.floor(attraction *= 0.8)
-      attraction = Math.floor((attraction / 762) * 100 ) //turn to percent (of maximum distance: 254*3)
-      let generationalAttraction = Math.floor((attraction) * (a.currentGeneration - 2) *2) // set attraction based on generation
+      attraction = Math.floor((attraction / 762) * 100) //turn to percent (of maximum distance: 254*3)
+      let generationalAttraction = Math.floor((attraction) * (a.currentGeneration - 2) * 2.5) // set attraction based on generation
       let match = (isByPercent(generationalAttraction) ? true : false)
       if (match || a.currentGeneration === 6) {
          a.attraction = b.attraction = attraction // set pixel's attraction to attraction with actual match
@@ -72,8 +72,7 @@ class Pixel {
    multiply = function (a, b) { // call pixels.generateXPixels based on attraction
       a.createTries++
       b.createTries++
-      let multiply = isByPercent(50)
-      // let multiply = isByPercent(a.attraction||50 / 2 + 25)
+      let multiply = isByPercent(a.attraction < 20 ? 60 : a.attraction + 30)
       multiply ? pixels.generateXPixels(1, a, b) : null
    }
 }
@@ -81,7 +80,7 @@ class Pixel {
 class Pixels extends Pixel {
    constructor() {
       super()
-      this.population = [[], [], [], [], [], []]
+      this.population = [[], [], [], [], [], [], []]
       this.pixelID = 1
    }
 
@@ -93,7 +92,7 @@ class Pixels extends Pixel {
    }
 
    createFirstGenerations = function (x) { //create generations until generations 6 exists
-      if (!this.population[4][0]) {
+      if (!this.population[4][0] && this.pixelID < x * 7) {
          this.population.unshift([])
          this.generateXPixels(x)
          this.matchSingles()
@@ -157,21 +156,22 @@ let allTests = async function (numberOfGenerations, pixelsPerGeneration) {
    console.log(`test:`, numberOfGenerations, `generations passed,`, pixelsPerGeneration, `pixels per starter generations`, testPopulation)
    tests.goneAfter8Generations(testPopulation)
    tests.createOnly3to6(testPopulation)
-   // tests.aChildMaxPerGeneration(testPopulation)
+   tests.aChildMaxPerGeneration(testPopulation)
    tests.matchOnly3to6(testPopulation)
-   // tests.matchMaxOnceAGeneration(testPopulation)
-   // tests.childGeneInRange(testPopulation)
-   // tests.someGeneA(testPopulation)
+   tests.matchMaxOnceAGeneration(testPopulation)
+   tests.childGeneInRange(testPopulation)
+   tests.someGeneA(testPopulation)
    tests.attractOpposite(testPopulation)
    tests.settleOverGeneration(testPopulation)
-   // tests.noSiblingPartner(testPopulation)
-   // tests.onlyOnePartner(testPopulation)
+   tests.noSiblingPartner(testPopulation)
+   tests.onlyOnePartner(testPopulation)
 }
 
-// allTests(8, 50)
+// allTests(5, 50)
 allTests(10, 50) // test after 10 generations, generate first generations with 50 pixels
+// allTests(15, 50)
 // allTests(20, 50)
 // allTests(30, 50)
 // allTests(40, 50)
 // allTests(50, 50)
-// allTests(100, 50)
+// allTests(60, 50) // unlikely to live much past 60 generations
