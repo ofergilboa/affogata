@@ -153,7 +153,7 @@ let pixels = new Pixels
 
 let allTests = async function (numberOfGenerations, pixelsPerGeneration) {
    let testPopulation = await pixels.createPopulation(numberOfGenerations, pixelsPerGeneration)
-   console.log(`test:`, numberOfGenerations, `generations passed,`, pixelsPerGeneration, `pixels per starter generations`, testPopulation)
+   console.log(`test: ${numberOfGenerations} generations passed, ${pixelsPerGeneration} pixels per starter generations`, testPopulation)
    tests.goneAfter8Generations(testPopulation)
    tests.createOnly3to6(testPopulation)
    tests.aChildMaxPerGeneration(testPopulation)
