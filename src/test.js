@@ -23,6 +23,7 @@ class testing {
    createOnly3to6 = function (population) {
       console.log(`------------------------------------------------2------------------------------------------------`)
       console.log(`-----createOnly3to6---- A pixel can replicate only between its 3rd and 6th generations`)
+      // using generation 8: (parent's generation - kid's generation) = parents generation at child's birth: should be between 3 and 6
       let kids = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 0; i < population[7].length; i++) {
          for (let j = 0; j < population[7][i].kids.id.length; j++) {
@@ -76,19 +77,6 @@ class testing {
          console.log(`${i}) The max match tries for a pixel at generation ${i} is: ${generation[i]}`)
       }
    }
-
-   // matchCreateOnceAGeneration = function (population) {
-   //    console.log(`---matchMaxOnceAGen---- A pixel can search for a partner only once a generation`)
-   //    let generation = { 0: 9, 1: 9, 2: 9, 3: 9, 4: 9, 5: 9, 6: 9, 7: 9, 8: 9 }
-   //    for (let i = 2; i < 8; i++) {
-   //       // for (let j = 3; j < 9; j++) {
-   //       population[i].forEach(p => p.matchTries + p.createTries < generation[i + 1] ? generation[i + 1] = p.matchTries + p.createTries : null)
-   //       // }
-   //    }
-   //    for (let i = 0; i < 9; i++) {
-   //       console.log(`${i}) The minimum match + create tries for a pixel at generation ${i} is: ${generation[i]}`)
-   //    }
-   // }
 
    childGeneInRange = function (population) {
       console.log(`------------------------------------------------6------------------------------------------------`)
@@ -145,14 +133,14 @@ class testing {
             } else if (isBetween(population[i][k].attraction, 61, 80)) {
                count[4]++
                distance[4] += population[i][k].partner ? this.getDistance(population[i][k], population[i].find(p => p.id === population[i][k].partner)) : null
-            } else if (isBetween(population[i][k].attraction, 81, 100)) {
+            } else if (isBetween(population[i][k].attraction, 81, 1000)) {
                count[5]++
                distance[5] += population[i][k].partner ? this.getDistance(population[i][k], population[i].find(p => p.id === population[i][k].partner)) : null
             }
          }
       }
       for (let i = 1; i < 6; i++) {
-         console.log(`The average distance between genes of pixels with attraction ${i * 20 - 19}-${i * 20} is: ${Math.floor(distance[i] / count[i])}`)
+         console.log(`The average distance between genes of pixels with attraction ${i * 20 - 19}${i * 20 < 90 ? `-${i * 20}` : `+`} is: ${distance[i] ? Math.floor(distance[i] / count[i]) : `There are none`}`)
       }
    }
 
@@ -169,7 +157,7 @@ class testing {
          }
       }
       for (let i = 3; i < 7; i++) {
-         console.log(`The average attraction between pixels who matched at generation ${[i]} is: ${Math.ceil(attractionAt[i] / count[i])}`)
+         console.log(`The average attraction between pixels who matched at generation ${[i]} is: ${attractionAt[i] ? Math.ceil(attractionAt[i] / count[i]) : `There are none`}`)
       }
    }
 
