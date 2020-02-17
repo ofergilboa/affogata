@@ -6,6 +6,7 @@ class testing {
    goneAfter8Generations = (population) => {
       console.log(`------------------------------------------------1------------------------------------------------`)
       console.log(`-----goneAfter8Gen---- Pixels have a life-span of 8 generations`)
+      console.log(`should return 0 for generations 0, 9`)
       let pixelsPerGeneration = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 }
       for (let i = 0; i < 9; i++) {
          population[i] ? pixelsPerGeneration[i + 1] += population[i].length : null
@@ -19,10 +20,11 @@ class testing {
          console.log(`${i}) There are ${pixelsPerGeneration[i]} pixels in generation ${i}`)
       }
    }
-
+   
    createOnly3to6 = function (population) {
       console.log(`------------------------------------------------2------------------------------------------------`)
       console.log(`-----createOnly3to6---- A pixel can replicate only between its 3rd and 6th generations`)
+      console.log(`should return 0 for generations 1, 2, 7, 8`)
       // using generation 8: (parent's generation - kid's generation) = parents generation at child's birth: should be between 3 and 6
       let kids = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 0; i < population[7].length; i++) {
@@ -39,10 +41,11 @@ class testing {
          console.log(`${i}) ${kids[i]} conceived at generation ${9 - i}: Pixels in generation 8 have ${kids[i]} kids in generation ${i}  `)
       }
    }
-
+   
    aChildMaxPerGeneration = function (population) {
       console.log(`------------------------------------------------3------------------------------------------------`)
       console.log(`-----aChildMaxPerGeneration---- A pixel can try replicating only once a generation`)
+      console.log(`should return (generation - 2) or less, maximum is 4 `)
       let generation = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 0; i < 8; i++) {
          for (let j = 3; j < 7; j++) {
@@ -53,10 +56,11 @@ class testing {
          console.log(`${i}) The maximum replicate tries for a pixel at generation ${i} is: ${generation[i]}`)
       }
    }
-
+   
    matchOnly3to6 = function (population) {
       console.log(`------------------------------------------------4------------------------------------------------`)
       console.log(`-----matchOnly3to6---- A pixel can search for a partner only between its 3rd and 6th generations`)
+      console.log(`should return 0 for generations 1, 2, 7, 8`)
       let matched = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 0; i < 8; i++) {
          population[i].forEach(p => p.partner ? matched[p.matchTries + 2]++ : null)
@@ -65,10 +69,11 @@ class testing {
          console.log(`${i}) There are ${matched[i]} pixels who matched at generation ${i}`)
       }
    }
-
+   
    matchMaxOnceAGeneration = function (population) {
       console.log(`------------------------------------------------5------------------------------------------------`)
       console.log(`-----matchMaxOnceAGen---- A pixel can search for a partner only once a generation`)
+      console.log(`should return (generation - 2) or less, maximum is 4 `)
       let generation = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 0; i < 8; i++) {
          population[i].forEach(p => p.matchTries > generation[i + 1] ? generation[i + 1] = p.matchTries : null)
@@ -77,10 +82,11 @@ class testing {
          console.log(`${i}) The max match tries for a pixel at generation ${i} is: ${generation[i]}`)
       }
    }
-
+   
    childGeneInRange = function (population) {
       console.log(`------------------------------------------------6------------------------------------------------`)
       console.log(`-----childGeneInRange---- Pixel's genes are in range of their parents equivalent genes`)
+      console.log(`should return all genes are in the range of their parents `)
       let between = 0
       let notBetween = 0
       for (let i = 0; i < 8; i++) {
@@ -95,10 +101,11 @@ class testing {
       }
       console.log(`There are ${between / 2} genes in range of their parents genes and ${notBetween} genes that are not`)
    }
-
+   
    someGeneA = function (population) {
       console.log(`------------------------------------------------7------------------------------------------------`)
       console.log(`-----someGeneA---- A pixel can be born with either an RGB sequence, or an RGBA sequence`)
+      console.log(`should return a number on both with and without gene A`)
       let geneA = 0
       let noGeneA = 0
       for (let i = 0; i < 8; i++) {
@@ -106,7 +113,7 @@ class testing {
       }
       console.log(`There are ${geneA} pixels with gene A and ${noGeneA} without`)
    }
-
+   
    getDistance = function (a, b) {
       let genesDistance = 0
       genesDistance += a.genes.R > b.genes.R ? a.genes.R - b.genes.R : b.genes.R - a.genes.R
@@ -117,6 +124,7 @@ class testing {
    attractOpposite = function (population) {
       console.log(`------------------------------------------------8------------------------------------------------`)
       console.log(`-----attractOpposite---- Pixels are more attracted to their genetic opposites`)
+      console.log(`numbers should change proportionally to each other: attraction goes up- genes distance goes up`)
       let count = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
       let distance = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
       for (let i = 2; i < 8; i++) {
@@ -143,11 +151,11 @@ class testing {
          console.log(`There are ${count[i]} pixels with attraction ${i * 20 - 19}${i * 20 < 90 ? `-${i * 20}` : `+`}, who's average distance between genes is: ${distance[i] ? Math.floor(distance[i] / count[i]) : `There are none`}`)
       }
    }
-
+   
    settleOverGeneration = function (population) {
       console.log(`------------------------------------------------9------------------------------------------------`)
-
       console.log(`-----settleOverGens---- The higher the generation of a pixel, the less attraction is needed to match`)
+      console.log(`numbers should change disproportionally to each other: generation goes up- attraction goes down `)
       let count = { 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       let attractionAt = { 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 }
       for (let i = 2; i < 8; i++) {
