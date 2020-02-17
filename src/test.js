@@ -124,7 +124,7 @@ class testing {
    attractOpposite = function (population) {
       console.log(`------------------------------------------------8------------------------------------------------`)
       console.log(`-----attractOpposite---- Pixels are more attracted to their genetic opposites`)
-      console.log(`numbers should change proportionally to each other: attraction goes up- genes distance goes up`)
+      console.log(`attraction and genes distance should change proportionally to each other: attraction goes up- genes distance goes up`)
       let count = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
       let distance = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
       for (let i = 2; i < 8; i++) {
@@ -195,7 +195,7 @@ Therefor:
    onlyOnePartner = function () {
       console.log(`------------------------------------------------11-----------------------------------------------`)
       console.log(`------onlyOnePartner---- Once pixels mate, they mate for life`)
-      console.log(`if a pixel who's "partner" attribute is a true, which means he is not single,
- the pixels population will alert him/her/it not to do that, then lose all faith in existence and crash`)
+      console.log(`if a pixel who's "partner" attribute is a true, which means he is not single, tries to match, 
+the pixels population will alert him/her/it not to do that, then lose all faith in existence and crash`)
    }
 }
