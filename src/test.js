@@ -52,7 +52,7 @@ class testing {
             population[i].forEach(p => p.createTries > generation[i + 1] ? generation[i + 1] = p.createTries : null)
          }
       }
-      for (let i = 0; i < 9; i++) {
+      for (let i = 1; i < 9; i++) {
          console.log(`${i}) The maximum replicate tries for a pixel at generation ${i} is: ${generation[i]}`)
       }
    }
@@ -65,7 +65,7 @@ class testing {
       for (let i = 0; i < 8; i++) {
          population[i].forEach(p => p.partner ? matched[p.matchTries + 2]++ : null)
       }
-      for (let i = 0; i < 9; i++) {
+      for (let i = 1; i < 9; i++) {
          console.log(`${i}) There are ${matched[i]} pixels who matched at generation ${i}`)
       }
    }
@@ -78,7 +78,7 @@ class testing {
       for (let i = 0; i < 8; i++) {
          population[i].forEach(p => p.matchTries > generation[i + 1] ? generation[i + 1] = p.matchTries : null)
       }
-      for (let i = 0; i < 9; i++) {
+      for (let i = 1; i < 9; i++) {
          console.log(`${i}) The max match tries for a pixel at generation ${i} is: ${generation[i]}`)
       }
    }
