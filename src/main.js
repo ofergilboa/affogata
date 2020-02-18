@@ -53,10 +53,12 @@ class Pixel {
       genesDistance += Math.abs(a.genes.R - b.genes.R)
       genesDistance += Math.abs(a.genes.G - b.genes.G)
       genesDistance += Math.abs(a.genes.B - b.genes.B)
+      a.genes.A && b.genes.A ? // adjusting genesDistance based on existence of gene A
+         genesDistance += Math.floor(Math.abs(a.genes.A - b.genes.A) * 300) :
+         !a.genes.A && !b.genes.A ?
+            genesDistance = Math.floor(genesDistance *= 1.2) :
+            genesDistance = Math.floor(genesDistance *= 0.8)
       let attraction = genesDistance
-      a.genes.A && b.genes.A || !a.genes.A && !b.genes.A ? // adjusting attraction based on existence of gene A
-         attraction = Math.floor(attraction *= 1.2) :
-         attraction = Math.floor(attraction *= 0.8)
       attraction = Math.floor((attraction / 762) * 100) //turn to percent (of maximum distance: 254*3)
       let generationalAttraction = Math.floor((attraction) * (a.currentGeneration - 2) * 2.5) // set attraction based on generation
       let match = (isByPercent(generationalAttraction) ? true : false)
@@ -168,10 +170,10 @@ let allTests = async function (numberOfGenerations, pixelsPerGeneration) {
 }
 
 // allTests(5, 50)
-allTests(10, 50) // test after 10 generations, generate first generations with 50 pixels
+// allTests(10, 50) // test after 10 generations, generate first generations with 50 pixels
 // allTests(15, 50)
 // allTests(20, 50)
-// allTests(30, 50)
+allTests(30, 50)
 // allTests(40, 50)
 // allTests(50, 50)
 // allTests(60, 50) // unlikely to live much past 60 generations
