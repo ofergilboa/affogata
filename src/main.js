@@ -50,9 +50,9 @@ class Pixel {
       a.matchTries++
       b.matchTries++
       let genesDistance = 0 // combining distances between genes
-      genesDistance += a.genes.R > b.genes.R ? a.genes.R - b.genes.R : b.genes.R - a.genes.R
-      genesDistance += a.genes.G > b.genes.G ? a.genes.G - b.genes.G : b.genes.G - a.genes.G
-      genesDistance += a.genes.B > b.genes.B ? a.genes.B - b.genes.B : b.genes.B - a.genes.B
+      genesDistance += Math.abs(a.genes.R - b.genes.R)
+      genesDistance += Math.abs(a.genes.G - b.genes.G)
+      genesDistance += Math.abs(a.genes.B - b.genes.B)
       let attraction = genesDistance
       a.genes.A && b.genes.A || !a.genes.A && !b.genes.A ? // adjusting attraction based on existence of gene A
          attraction = Math.floor(attraction *= 1.2) :
@@ -98,7 +98,8 @@ class Pixels extends Pixel {
          this.matchSingles()
          return this.createFirstGenerations(x)
       }
-      this.population.unshift([])
+      this.population.unshift([]) // creating an empty first generation to be filled by 3-6
+      this.population.splice(8) // killing generation 9
    }
 
    setCurrentGeneration = function () {
@@ -137,7 +138,6 @@ class Pixels extends Pixel {
       this.setCurrentGeneration()
       this.matchSingles()
       this.multiplyCouples()
-      this.population.splice(8) // killing generation 9
       numberOfGenerations--
       track++
       if (numberOfGenerations > 0) {
